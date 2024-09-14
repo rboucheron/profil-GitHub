@@ -1,17 +1,19 @@
-import type {HttpContext} from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 
 export default class AuthController {
-  githubRedirect({ally} : HttpContext) {
-    ally.use('github').redirect((req) => {
-      req.scopes(['user'])
-    })
-  }
 
+
+  async verifyToken(token: string): Promise<boolean> {
+    const authUser = await User.query().where('token', token).first()
+    if (authUser) {
+      return true
+    }
+    return false
+  }
 
   async githubCallback({ ally, response }: HttpContext) {
     const gh = ally.use('github')
-
 
     if (gh.accessDenied()) {
       return response.badRequest('Access was denied by the user')
@@ -25,9 +27,7 @@ export default class AuthController {
       return response.badRequest(gh.getError())
     }
 
-
     const githubUser = await gh.user()
-
 
     const authUser = await User.query().where('email', githubUser.email).first()
 
@@ -35,16 +35,15 @@ export default class AuthController {
       return authUser
     }
 
-
     const newUser = await User.create({
       email: githubUser.email,
       name: githubUser.name,
       nickName: githubUser.nickName,
       avatarUrl: githubUser.avatarUrl,
       emailVerificationState: 'verified',
+      token: githubUser.token.token,
     })
 
     return newUser
   }
-
 }
