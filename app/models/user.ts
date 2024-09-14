@@ -5,6 +5,9 @@ export default class User extends BaseModel {
   declare id: number
 
   @column()
+  declare login: string
+
+  @column()
   declare name?: string
 
   @column()

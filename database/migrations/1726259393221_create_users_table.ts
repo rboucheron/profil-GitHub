@@ -12,6 +12,7 @@ export default class extends BaseSchema {
       table.string('nick_name').nullable()
       table.string('avatar_url').nullable()
       table.string('token').nullable()
+      table.string('login').notNullable()
 
 
       // Utilise table.timestamps() pour ajouter created_at et updated_at

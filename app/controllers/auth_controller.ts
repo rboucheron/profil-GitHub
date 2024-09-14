@@ -31,8 +31,25 @@ export default class AuthController {
 
     const authUser = await User.query().where('email', githubUser.email).first()
 
+
     if (authUser) {
-      return authUser
+      response.cookie('user', JSON.stringify({
+        id: authUser.id,
+        token: authUser.token,
+        name: authUser.name,
+        nickName: authUser.nickName,
+        avatarUrl: authUser.avatarUrl,
+        login: authUser.login,
+      }), {
+
+        maxAge: '7d',
+        path: '/',
+        secure: true,
+        sameSite: 'strict',
+      })
+
+      return
+
     }
 
     const newUser = await User.create({
@@ -42,9 +59,25 @@ export default class AuthController {
       avatarUrl: githubUser.avatarUrl,
       emailVerificationState: 'verified',
       token: githubUser.token.token,
+      login: githubUser.original.login
+
     })
 
-    response.cookie('user', newUser)
+    response.cookie('user', JSON.stringify({
+      id: newUser.id,
+      token: newUser.token,
+      name: newUser.name,
+      nickName: githubUser.nickName,
+      avatarUrl: newUser.avatarUrl,
+      login: newUser.login,
+    }), {
+      httpOnly: true,
+      maxAge: '7d',
+      path: '/',
+      secure: true,
+      sameSite: 'strict',
+    })
+
 
   }
 }

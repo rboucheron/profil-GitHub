@@ -21,17 +21,17 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: [ "Instrument Sans", "sans-serif" ]
+              sans: [ 'Instrument Sans', 'sans-serif' ],
             },
             colors: {
               primary: {
-                DEFAULT: "#5A45FF",
-                lighter: "#a599ff"
+                DEFAULT: '#5A45FF',
+                lighter: '#a599ff',
               },
-            }
-          }
-        }
-      };
+            },
+          },
+        },
+      }
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -41,6 +41,11 @@
 
 
     <main class="container mx-auto py-12">
+    @if(user)
+    <div class="w-full text-2xl font-semibold ">👋 Bonjour {{ user.nickName}} </div>
+    @else
+
+    @endif
       <div class="grid grid-cols-2 gap-4 content-center place-content-center my-24">
         <div class=" p-2 pt-10">
           <h2 class="text-4xl font-semibold mb-6">
@@ -49,7 +54,11 @@
           <p class="text-lg mb-8">
             Utilisez notre générateur pour créer un portfolio professionnel et mettez en valeur vos compétences en développement.
           </p>
-          <a href="/github/redirect" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">Démarrer</a>
+              @if(user)
+
+            @else
+<a href="/github/redirect" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">Démarrer</a>
+              @endif
         </div>
         <div >
           <img src="{{ asset('img/Github logo.png') }}" alt="Github image " class="w-1/2 m-auto" />
@@ -60,7 +69,7 @@
       <div class="bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto shadow-lg">
         <pre class="text-sm leading-relaxed">
           <code>
-            <span class="text-gray-200">// Ceci est un exemple de code affiché avec Tailwind CSS</span>
+            <span class="text-blue-500">// Ceci est un exemple de code affiché avec Tailwind CSS</span>
             const greet = (name) => {
               return `Hello, ${name}!`;
             }
