@@ -44,6 +44,7 @@ export default class AuthController {
       token: githubUser.token.token,
     })
 
-    return newUser
+    response.cookie('user', newUser)
+
   }
 }

@@ -1,6 +1,6 @@
-import type { HasOne } from '@adonisjs/lucid/types/relations'
-import { column, BaseModel, hasOne } from '@adonisjs/lucid/orm'
-import User from '#models/user'
+
+import { column, BaseModel} from '@adonisjs/lucid/orm'
+
 
 export default class GithubRepot extends BaseModel {
 
@@ -22,8 +22,6 @@ export default class GithubRepot extends BaseModel {
   @column()
   public declare htmlUrl: string
 
-  @hasOne(() => User, {
-    foreignKey: 'user_id',
-  })
-  declare userId: HasOne<typeof User>
+  @column()
+  public declare userId: number
 }
