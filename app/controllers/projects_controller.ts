@@ -7,10 +7,10 @@ export default class ProjectsController {
     const userCookie = request.cookie('user')
     const user = userCookie ? JSON.parse(userCookie) : null
 
-    const githubRepot = await GithubRepot.query().where('user_id', user.id).first()
+    const projects = await GithubRepot.query().where('userId', user.id)
 
-    if (githubRepot) {
-      return view.render('dashboard', { githubRepot, user })
+    if (projects) {
+      return view.render('repots', { projects, user })
     }
 
     await this.fetchProjectsByUser(user.id, user.login)

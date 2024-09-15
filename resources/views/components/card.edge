@@ -1,0 +1,7 @@
+@each(project in projects)
+<div class="border p-4 border-gray-400 rounded-sm">
+  <h2 class="text-xl font-semibold">{{ project.name }}</h2>
+  <p class="text-md font-normal">{{ project.description }}</p>
+  <a href="" class="text-blue-400 text-sm font-light">Visit Project</a>
+</div>
+@endeach

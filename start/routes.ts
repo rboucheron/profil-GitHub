@@ -11,4 +11,4 @@ router.get('/github/redirect', ({ ally }) => {
 
 router.get('/github/callback', [AuthController, 'githubCallback'])
 
-router.get('/dashbord', [ProjectsController, 'index'])
+router.get('/repot', [ProjectsController, 'index'])
