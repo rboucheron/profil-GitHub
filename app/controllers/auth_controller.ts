@@ -3,16 +3,7 @@ import User from '#models/user'
 
 export default class AuthController {
 
-
-  async verifyToken(token: string): Promise<boolean> {
-    const authUser = await User.query().where('token', token).first()
-    if (authUser) {
-      return true
-    }
-    return false
-  }
-
-  async githubCallback({ ally, response }: HttpContext) {
+  async githubCallback({ ally, response, auth }: HttpContext) {
     const gh = ally.use('github')
 
     if (gh.accessDenied()) {
@@ -31,53 +22,17 @@ export default class AuthController {
 
     const authUser = await User.query().where('email', githubUser.email).first()
 
-
-    if (authUser) {
-      response.cookie('user', JSON.stringify({
-        id: authUser.id,
-        token: authUser.token,
-        name: authUser.name,
-        nickName: authUser.nickName,
-        avatarUrl: authUser.avatarUrl,
-        login: authUser.login,
-      }), {
-
-        maxAge: '7d',
-        path: '/',
-        secure: true,
-        sameSite: 'strict',
+    if (!authUser) {
+      const newUser = await User.create({
+        fullName: githubUser.name,
+        email: githubUser.email,
+        login: githubUser.original.login,
+        avatarUrl: githubUser.avatarUrl,
+        token: githubUser.token.token,
       })
 
-      return
+      await auth.use('web').login(newUser)
 
     }
-
-    const newUser = await User.create({
-      email: githubUser.email,
-      name: githubUser.name,
-      nickName: githubUser.nickName,
-      avatarUrl: githubUser.avatarUrl,
-      emailVerificationState: 'verified',
-      token: githubUser.token.token,
-      login: githubUser.original.login
-
-    })
-
-    response.cookie('user', JSON.stringify({
-      id: newUser.id,
-      token: newUser.token,
-      name: newUser.name,
-      nickName: githubUser.nickName,
-      avatarUrl: newUser.avatarUrl,
-      login: newUser.login,
-    }), {
-      httpOnly: true,
-      maxAge: '7d',
-      path: '/',
-      secure: true,
-      sameSite: 'strict',
-    })
-
-
   }
 }

@@ -1,7 +1,8 @@
 import router from '@adonisjs/core/services/router'
-import AuthController from '#controllers/auth_controller'
-import HomeController from '#controllers/home_controller'
-import ProjectsController from '#controllers/projects_controller'
+import { middleware } from '#start/kernel'
+const HomeController = () => import('#controllers/home_controller')
+const AuthController = () => import('#controllers/auth_controller')
+const RepotsController = () => import('#controllers/repots_controller')
 
 router.get('/', [HomeController, 'index'])
 
@@ -11,4 +12,4 @@ router.get('/github/redirect', ({ ally }) => {
 
 router.get('/github/callback', [AuthController, 'githubCallback'])
 
-router.get('/repot', [ProjectsController, 'index'])
+router.get('/repot', [RepotsController, 'index']).use(middleware.auth())

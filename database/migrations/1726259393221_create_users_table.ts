@@ -6,13 +6,16 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').unsigned().primary().notNullable()
+      table.string('full_name').nullable()
       table.string('email', 254).notNullable().unique()
-      table.string('email_verification_state').notNullable().defaultTo('unverified')
-      table.string('name').nullable()
-      table.string('nick_name').nullable()
       table.string('avatar_url').nullable()
       table.string('token').nullable()
       table.string('login').notNullable()
+
+
+      table.timestamp('created_at').notNullable()
+      table.timestamp('updated_at').nullable()
+
 
 
       // Utilise table.timestamps() pour ajouter created_at et updated_at
@@ -24,3 +27,6 @@ export default class extends BaseSchema {
     this.schema.dropTable(this.tableName)
   }
 }
+
+
+

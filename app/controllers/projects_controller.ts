@@ -39,4 +39,18 @@ export default class ProjectsController {
       throw new Error('Impossible de récupérer les dépôts GitHub.')
     }
   }
+
+  async getProjectByUser({ request, response, user }: HttpContext) {
+
+ 
+
+   const projects = await GithubRepot.query().where('userId', user.id)
+
+   if (projects) {
+     return response.status(200).send({ repots: projects})
+   }
+
+   return response.status(404).send({message: 'not found'})
+
+  }
 }
