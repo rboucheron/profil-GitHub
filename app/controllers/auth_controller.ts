@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 
+
 export default class AuthController {
 
   async githubCallback({ ally, response, auth }: HttpContext) {
@@ -32,7 +33,8 @@ export default class AuthController {
       })
 
       await auth.use('web').login(newUser)
-
     }
+
+    return response.redirect(`/repot`)
   }
 }

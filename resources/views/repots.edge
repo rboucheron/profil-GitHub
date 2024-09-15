@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html>
 @include('base/head.edge')
-  <body class="min-h-screen w-screen font-sans ">
-      @include('components/header')
-      <main class="container mx-auto py-12">
-      <h1 class="w-full text-2xl text-center mb-10 mt-10"> Voici l'ensemble des projet que nous avons extrait de votre Github</h1>
-      <div class="grid grid-cols-3 gap-4">
+
+<body class="min-h-screen w-screen font-sans ">
+  @include('components/header')
+  <main class="container mx-auto py-12">
+    <h1 class="w-full text-2xl text-center mb-10 mt-10"> Voici l'ensemble des projet que nous avons extrait de votre
+      Github</h1>
+    <div class="grid grid-cols-3 gap-4">
       @each(project in projects)
       <div class="border p-4 border-gray-400 rounded-sm relative p-y-7">
         <h2 class="text-xl font-semibold">{{ project.name }}</h2>
 
         @if(project.description === null)
-          <p class="text-md font-normal mb-6"> Aucune Description </p>
+        <p class="text-md font-normal mb-6"> Aucune Description </p>
         @else
-           <p class="text-md font-normal mb-6">   {{ project.description }} </p>
+        <p class="text-md font-normal mb-6"> {{ project.description }} </p>
 
         @endif
         <div class="flex justify-end space-x-4 mt-6 absolute bottom-2 right-2">
-        <div class="text-blue-400 text-sm font-light">Modifier</div>
-        <div class="text-red-400 text-sm font-light">Supprimer</div>
-</div>
+          <div class="text-blue-400 text-sm font-light">Modifier</div>
+          <div class="text-red-400 text-sm font-light">Supprimer</div>
+        </div>
 
       </div>
       @endeach
 
-       </div>
+    </div>
 
-</main>
+  </main>
 
 
 
 
 </body>
+
 </html>

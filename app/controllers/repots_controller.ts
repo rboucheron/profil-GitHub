@@ -3,29 +3,26 @@ import GithubRepot from '#models/github_repot'
 import axios from 'axios'
 
 export default class RepotsController {
-
-  async index({response, auth, view}: HttpContext) {
-    const user = auth.user;
+  async index({ response, auth, view }: HttpContext) {
+    const user = auth.user
     if (!user) {
       return response.status(400).send({})
     }
 
-    const projects = await GithubRepot.query().where('userId', user.id);
+    const projects = await GithubRepot.query().where('userId', user.id)
 
-    if (!projects) {
-      const projects = await this.fetchProjects(user.id, user.login)
-      return view.render('repots', { projects, user })
-
+    if (!projects.length) { // Vérifie si le tableau est vide
+      const newProjects = await this.fetchProjects(user.id, user.login)
+      return view.render('repots', { projects: newProjects, user })
     }
+
     return view.render('repots', { projects, user })
   }
-
 
   async fetchProjects(userId: number, login: string): Promise<GithubRepot[]> {
     const url = `https://api.github.com/users/${login}/repos`
     try {
-      const apiResponse = await axios.get(url)
-      const fetchedRepos = apiResponse.data
+      const { data: fetchedRepos } = await axios.get(url)
       const savedRepos: GithubRepot[] = []
 
       for (const fetchedRepo of fetchedRepos) {
@@ -46,7 +43,4 @@ export default class RepotsController {
       throw new Error('Impossible de récupérer les dépôts GitHub.')
     }
   }
-
-
-
 }

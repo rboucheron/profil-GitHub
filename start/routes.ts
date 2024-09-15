@@ -1,10 +1,9 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
-const HomeController = () => import('#controllers/home_controller')
 const AuthController = () => import('#controllers/auth_controller')
 const RepotsController = () => import('#controllers/repots_controller')
 
-router.get('/', [HomeController, 'index'])
+router.on('/').render('pages/home')
 
 router.get('/github/redirect', ({ ally }) => {
   return ally.use('github').redirect()
