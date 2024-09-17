@@ -37,4 +37,36 @@ export default class AuthController {
 
     return response.redirect(`/repot`)
   }
+
+
+  async login({request, response, auth}: HttpContext) {
+    const {email, password} = request.all();
+
+    const user = await User.verifyCredentials(email, password)
+
+    if (user) {
+
+      await auth.use('web').login(user)
+
+      return response.redirect(`/repot`)
+
+    }
+
+    return response.status(400).send({})
+
+  }
+
+  async registration({request, response, auth}: HttpContext) {
+    const {email, fullName, password} = request.all();
+
+    const newUser = await User.create({'email': email, 'fullName': fullName, 'password': password})
+
+    if (newUser) {
+      await auth.use('web').login(newUser)
+      return response.redirect(`/repot`)
+    }
+    return response.status(500).send({})
+
+  }
+
 }
