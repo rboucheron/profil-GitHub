@@ -13,3 +13,4 @@ router.get('/github/callback', [AuthController, 'githubCallback'])
 
 router.get('/repot', [RepotsController, 'index']).use(middleware.auth())
 router.get('/repot/update/:id', [RepotsController, ]).use(middleware.auth())
+router.on('/login').render('pages/login')

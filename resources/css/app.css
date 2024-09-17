@@ -13,4 +13,8 @@ body {
   width: 100%;
 }
 
+.input-custom {
+  @apply block w-full px-3 py-2 text-base text-gray-700 placeholder-gray-400 border bg-zinc-200 rounded-md focus:outline-none focus:ring-1  ;
+}
+
 
