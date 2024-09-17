@@ -43,4 +43,16 @@ export default class RepotsController {
       throw new Error('Impossible de récupérer les dépôts GitHub.')
     }
   }
+
+  async repotForm({ params, response, auth, view}: HttpContext) {
+    const user = auth.user
+    const repotID = params.id
+    const repot = await GithubRepot.query().where('id', repotID).first()
+    if (!repot) {
+      return response.status(400).send({})
+    }
+    return view.render('repots', { repot, user})
+
+  }
+
 }
