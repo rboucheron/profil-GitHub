@@ -13,7 +13,7 @@ export default class RepotsController {
 
     if (!projects.length && user.login) {
       const newProjects = await this.fetchProjects(user.id, user.login)
-      return view.render('repots', { projects: newProjects, user })
+      return view.render('pages/repots', { projects: newProjects, user })
     }
 
     return view.render('pages/repots', { projects, user })
@@ -51,7 +51,7 @@ export default class RepotsController {
     if (!repot) {
       return response.status(400).send({})
     }
-    return view.render('repots', { repot, user})
+    return view.render('pages/repots', { repot, user})
 
   }
 

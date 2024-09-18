@@ -1,0 +1,22 @@
+@include('base/header')
+
+<h1 class="mt-10 text-2xl text-center">Choisit ton avatar : </h1>
+<div class="w-1/2 m-auto grid grid-cols-4">
+  @each((avatarType, index) in avatarTypes)
+    <div class=" p-4  rounded-sm">
+      <img src="{{ avatarType }}" alt="image de profil" class=" avatar w-3/4 m-auto rounded-full bg-sky-500" width="1000" height="1000"/>
+    </div>
+  @endeach
+</div>
+
+<script>
+  const avatars = document.querySelectorAll('.avatar');
+  avatars.forEach((avatar) => {
+    avatar.addEventListener('click', function() {
+      avatars.forEach(img => img.style.border = 'none');
+      avatar.style.border = '5px solid orange';
+    });
+  });
+</script>
+
+@include('base/footer')

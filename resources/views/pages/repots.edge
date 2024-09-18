@@ -3,8 +3,12 @@
 
 @include('base/header')
   <main class="container mx-auto py-12">
+ @if(projects.length = 0)
+  <h1 class="w-full text-2xl text-center mb-10 mt-10">Vous N'avez aucun Projet</h1>
+  @else
     <h1 class="w-full text-2xl text-center mb-10 mt-10"> Voici l'ensemble des projet que nous avons extrait de votre
       Github</h1>
+  @endif
     <div class="grid grid-cols-3 gap-4">
       @each(project in projects)
       <div class="border p-4 border-gray-400 rounded-sm relative p-y-7">
