@@ -11,12 +11,12 @@ export default class RepotsController {
 
     const projects = await GithubRepot.query().where('userId', user.id)
 
-    if (!projects.length) { // Vérifie si le tableau est vide
+    if (!projects.length && user.login) {
       const newProjects = await this.fetchProjects(user.id, user.login)
       return view.render('repots', { projects: newProjects, user })
     }
 
-    return view.render('repots', { projects, user })
+    return view.render('pages/repots', { projects, user })
   }
 
   async fetchProjects(userId: number, login: string): Promise<GithubRepot[]> {

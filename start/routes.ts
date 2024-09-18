@@ -12,5 +12,8 @@ router.get('/github/redirect', ({ ally }) => {
 router.get('/github/callback', [AuthController, 'githubCallback'])
 
 router.get('/repot', [RepotsController, 'index']).use(middleware.auth())
-router.get('/repot/update/:id', [RepotsController, ]).use(middleware.auth())
+router.get('/repot/update/:id', [RepotsController, 'index']).use(middleware.auth())
 router.on('/login').render('pages/login')
+router.on('/signin').render('pages/signin')
+router.post('/login', [AuthController, 'login'])
+router.post('/signin', [AuthController, 'registration'])

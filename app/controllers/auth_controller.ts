@@ -57,9 +57,9 @@ export default class AuthController {
   }
 
   async registration({request, response, auth}: HttpContext) {
-    const {email, fullName, password} = request.all();
+    const {email, name, password} = request.all();
 
-    const newUser = await User.create({'email': email, 'fullName': fullName, 'password': password})
+    const newUser = await User.create({'email': email, 'fullName': name, 'password': password})
 
     if (newUser) {
       await auth.use('web').login(newUser)

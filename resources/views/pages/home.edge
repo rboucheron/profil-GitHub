@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-@include('base/head.edge')
-
-<body class="min-h-screen w-screen font-sans bg-zinc-200 ">
-  @include('components/header')
-
-
+@include('base/header')
   <main class="container mx-auto py-12">
     @if(user)
     <div class="w-full text-2xl font-semibold ">👋 Bonjour {{ user.nickName}} </div>
@@ -60,9 +53,4 @@
 
   </main>
 
-  @include('base/lucid.edge')
-
-
-</body>
-
-</html>
+@include('base/footer')

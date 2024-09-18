@@ -1,0 +1,51 @@
+@let(title = 'inscription')
+@include('base/header')
+
+<form action="" method="POST">
+
+  <div class="w-1/2 m-auto mt-10">
+  {{csrfField()}}
+      @component('components/input', {
+        type: 'text',
+        name: 'name',
+        id: 'name',
+        label: 'Name',
+        placeholder: 'John Doe',
+        required: true
+      })
+      @endcomponent
+   </div>
+
+   <div class="w-1/2 m-auto mt-10">
+      @component('components/input', {
+        type: 'email',
+        name: 'email',
+        id: 'email',
+        label: 'Email',
+        required: true
+      })
+      @endcomponent
+   </div>
+
+   <div class="w-1/2 m-auto mt-10">
+      @component('components/input', {
+        type: 'password',
+        name: 'password',
+        id: 'password',
+        label: 'Password',
+        placeholder: '***',
+        required: true
+      })
+      @endcomponent
+   </div>
+
+    <div class="w-1/2 m-auto mt-10 flex justify-between ">
+
+      <button type="submit" class="bg-blue-300 p-4 rounded-full ">Inscription</button>
+      <a href="" class="p-2 rounded-xl ">Avec Github</a>
+
+    </div>
+
+</div>
+</form>
+@include('base/footer')
