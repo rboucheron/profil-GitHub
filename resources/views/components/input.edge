@@ -1,0 +1,14 @@
+<div class="mb-4">
+  <label for="{{ id }}" class="block text-gray-700 text-sm font-bold mb-2">
+    {{ label || name }}
+  </label>
+  <input
+    type="{{ type || 'text' }}"
+    name="{{ name }}"
+    id="{{ id }}"
+    value="{{ value || '' }}"
+    class="input-custom"
+    placeholder="{{ placeholder || '' }}"
+    {{ required ? 'required' : '' }}
+  />
+</div>

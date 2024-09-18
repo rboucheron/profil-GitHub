@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-@include('base/head.edge')
 
-<body class="min-h-screen w-screen font-sans ">
-  @include('components/header')
+@let(title = 'repots')
+
+@include('base/header')
   <main class="container mx-auto py-12">
     <h1 class="w-full text-2xl text-center mb-10 mt-10"> Voici l'ensemble des projet que nous avons extrait de votre
       Github</h1>
@@ -29,10 +27,4 @@
     </div>
 
   </main>
-
-
-
-
-</body>
-
-</html>
+@include('base/footer')
