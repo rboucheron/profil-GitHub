@@ -1,9 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
-
+import { registrationValidator } from '#validators/auth'
 
 export default class AuthController {
-
   async githubCallback({ ally, response, auth }: HttpContext) {
     const gh = ally.use('github')
 
@@ -38,35 +37,44 @@ export default class AuthController {
     return response.redirect(`/repot`)
   }
 
-
-  async login({request, response, auth}: HttpContext) {
-    const {email, password} = request.all();
+  async login({ request, response, auth }: HttpContext) {
+    const { email, password } = request.all()
 
     const user = await User.verifyCredentials(email, password)
 
     if (user) {
-
       await auth.use('web').login(user)
 
       return response.redirect(`/repot`)
-
     }
 
     return response.status(400).send({})
-
   }
 
-  async registration({request, response, auth}: HttpContext) {
-    const {email, name, password} = request.all();
+  async registration({ request, response, auth }: HttpContext) {
+    try {
+      await registrationValidator.validate(request.all())
+      const { email, fullName, password } = request.only(['email', 'fullName', 'password'])
 
-    const newUser = await User.create({'email': email, 'fullName': name, 'password': password})
+      const newUser = await User.create({
+        email: email,
+        fullName: fullName,
+        password: password,
+      })
 
-    if (newUser) {
-      await auth.use('web').login(newUser)
-      return response.redirect(`/repot`)
+      if (newUser) {
+        await auth.use('web').login(newUser)
+        return response.redirect(`/repot`)
+      }
+
+      return response.status(500).send({ error: "Erreur lors de la création de l'utilisateur" })
+    } catch (error) {
+      if (error.messages) {
+        return response.badRequest(error.messages)
+      }
+
+      return response.status(500).send({ error: 'Une erreur est survenue' })
     }
-    return response.status(500).send({})
-
   }
 
 }
