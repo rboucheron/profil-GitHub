@@ -8,15 +8,27 @@
     </div>
   @endeach
 </div>
+<h1 class="mt-10 text-2xl text-center">Compléte ta Bio</h1>
+<div class="w-3/5 m-auto flex flex-col">
+  @component('components/textarea', {
+        name: 'bio',
+        id: 'bio',
+        label: 'Bio',
+        required: false
+      })
+      @endcomponent
+
+</div>
+
 
 <script>
-  const avatars = document.querySelectorAll('.avatar');
+  const avatars = document.querySelectorAll('.avatar')
   avatars.forEach((avatar) => {
     avatar.addEventListener('click', function() {
-      avatars.forEach(img => img.style.border = 'none');
-      avatar.style.border = '5px solid orange';
-    });
-  });
+      avatars.forEach(img => img.style.border = 'none')
+      avatar.style.border = '5px solid orange'
+    })
+  })
 </script>
 
 @include('base/footer')

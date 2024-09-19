@@ -1,0 +1,12 @@
+<div class="mb-4">
+  <label for="{{ id }}" class="block text-gray-700 text-sm font-bold mb-2">
+    {{ label || name }}
+  </label>
+  <textarea
+    name="{{ name }}"
+    id="{{ id }}"
+    value="{{ value || '' }}"
+    class="input-custom"
+    {{ required ? 'required' : '' }}
+    ></textarea>
+</div>

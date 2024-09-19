@@ -3,8 +3,51 @@
 
 @include('base/header')
   <main class="container mx-auto py-12">
- @if(projects.length = 0)
-  <h1 class="w-full text-2xl text-center mb-10 mt-10">Vous N'avez aucun Projet</h1>
+ @if(!projects)
+  <h1 class="w-full text-2xl text-center mb-10 mt-10">Vous n'avez aucun Projet</h1>
+  <form action="" method="POST" >
+
+  <div class="flex items-center justify-center w-full mt-10">
+     <div class="w-auto ">
+        @component('components/input', {
+          type: 'text',
+          name: 'name',
+          id: 'name',
+          label: 'Nom du Projet',
+          required: true
+        })
+        @endcomponent
+     </div>
+        <div class="w-auto m-2">
+           @component('components/input', {
+             type: 'text',
+             name: 'homepage',
+             id: 'homepage',
+             label: 'Liens vers le projet ',
+             required: true
+           })
+           @endcomponent
+        </div>
+
+  </div>
+
+
+
+
+
+      <div class="w-1/2 m-auto mt-10">
+         @component('components/input', {
+           type: 'text',
+           name: 'homepage',
+           id: 'homepage',
+           label: 'Liens vers le projet ',
+           required: true
+         })
+         @endcomponent
+      </div>
+
+
+  </form>
   @else
     <h1 class="w-full text-2xl text-center mb-10 mt-10"> Voici l'ensemble des projet que nous avons extrait de votre
       Github</h1>

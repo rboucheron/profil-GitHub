@@ -16,6 +16,10 @@ export default class RepotsController {
       return view.render('pages/repots', { projects: newProjects, user })
     }
 
+    if (projects.length == 0) {
+      return view.render('pages/repots', { user })
+    }
+
     return view.render('pages/repots', { projects, user })
   }
 
@@ -44,15 +48,13 @@ export default class RepotsController {
     }
   }
 
-  async repotForm({ params, response, auth, view}: HttpContext) {
+  async repotForm({ params, response, auth, view }: HttpContext) {
     const user = auth.user
     const repotID = params.id
     const repot = await GithubRepot.query().where('id', repotID).first()
     if (!repot) {
       return response.status(400).send({})
     }
-    return view.render('pages/repots', { repot, user})
-
+    return view.render('pages/repots', { repot, user })
   }
-
 }
