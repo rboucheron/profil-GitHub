@@ -6,8 +6,9 @@
  @if(!projects)
   <h1 class="w-full text-2xl text-center mb-10 mt-10">Vous n'avez aucun Projet</h1>
   <form action="" method="POST" >
+    {{csrfField()}}
 
-  <div class="flex items-center justify-center w-full mt-10">
+  <div class="grid grid-cols-2 w-full mt-10 gap-6">
      <div class="w-auto ">
         @component('components/input', {
           type: 'text',
@@ -17,8 +18,9 @@
           required: true
         })
         @endcomponent
+
      </div>
-        <div class="w-auto m-2">
+        <div class="w-auto ">
            @component('components/input', {
              type: 'text',
              name: 'homepage',
@@ -29,27 +31,49 @@
            @endcomponent
         </div>
 
+              <div class=" col-span-2">
+                 @component('components/textarea', {
+
+                   name: 'description',
+                   id: 'description',
+                   label: 'Décrit ton projet',
+                   required: true
+                 })
+                 @endcomponent
+              </div>
+                <div class="w-auto ">
+                   @component('components/input', {
+                     type: 'text',
+                     name: 'language',
+                     id: 'langage',
+                     label: 'Langage utilisé  ',
+                     required: true
+                   })
+                   @endcomponent
+                </div>
+            <div class="w-auto ">
+                           @component('components/input', {
+                             type: 'text',
+                             name: 'htmlUrl',
+                             id: 'html_url',
+                             label: 'Liens Github  ',
+                             required: true
+                           })
+                           @endcomponent
+                        </div>
+        <div class="w-auto">
+         <button type="submit" class="w-1/2   bg-blue-400 rounded-full p-2 text-white  m-auto">Ajouter </button>
+
+</div>
+
+
+
+
   </div>
-
-
-
-
-
-      <div class="w-1/2 m-auto mt-10">
-         @component('components/input', {
-           type: 'text',
-           name: 'homepage',
-           id: 'homepage',
-           label: 'Liens vers le projet ',
-           required: true
-         })
-         @endcomponent
-      </div>
-
 
   </form>
   @else
-    <h1 class="w-full text-2xl text-center mb-10 mt-10"> Voici l'ensemble des projet que nous avons extrait de votre
+    <h1 class="w-full text-2xl text-center mb-10 mt-10"> Voici l'ensemble des projets que nous avons extraits de votre
       Github</h1>
   @endif
     <div class="grid grid-cols-3 gap-4">

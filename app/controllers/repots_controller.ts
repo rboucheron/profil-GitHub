@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import GithubRepot from '#models/github_repot'
 import axios from 'axios'
+import { githubRepotValidators } from '#validators/github_repot'
 
 export default class RepotsController {
   async index({ response, auth, view }: HttpContext) {
@@ -46,6 +47,33 @@ export default class RepotsController {
       console.error('Erreur lors de la récupération des dépôts GitHub :', error)
       throw new Error('Impossible de récupérer les dépôts GitHub.')
     }
+  }
+
+  async addRepot({ request, auth, response }: HttpContext) {
+
+    const { name, homepage, description, language, htmlUrl } = request.only([
+      'name',
+      'homepage',
+      'description',
+      'language',
+      'htmlUrl',
+    ])
+    const user = auth.user
+
+    if (user) {
+      await GithubRepot.create({
+        userId: user.id,
+        name: name,
+        homepage: homepage,
+        description: description,
+        language: language,
+        htmlUrl: htmlUrl,
+      })
+
+      return response.redirect(`/repot`)
+    }
+
+
   }
 
   async repotForm({ params, response, auth, view }: HttpContext) {
