@@ -5,8 +5,9 @@
   <textarea
     name="{{ name }}"
     id="{{ id }}"
-    value="{{ value || '' }}"
+
     class="input-custom"
     {{ required ? 'required' : '' }}
-    ></textarea>
+
+    >{{ value || '' }}</textarea>
 </div>

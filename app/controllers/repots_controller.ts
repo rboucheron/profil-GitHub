@@ -85,4 +85,18 @@ export default class RepotsController {
     }
     return view.render('pages/repots', { repot, user })
   }
+
+  async updateForm({ params, response, auth, view }: HttpContext) {
+    const repotId = params.id
+    const repot = await GithubRepot.query().where('id', repotId).first()
+    const user = auth.user
+    if (!repot) {
+      return response.status(400).send({})
+
+    }
+
+    return view.render('pages/update', {repot, user})
+  }
+
+
 }

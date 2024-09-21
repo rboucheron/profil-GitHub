@@ -13,7 +13,7 @@ router.get('/github/redirect', ({ ally }) => {
 router.get('/github/callback', [AuthController, 'githubCallback'])
 
 router.get('/repot', [RepotsController, 'index']).use(middleware.auth())
-router.get('/repot/update/:id', [RepotsController, 'index']).use(middleware.auth())
+router.get('/repot/update/:id', [RepotsController, 'updateForm']).use(middleware.auth())
 router.get('/profil', [ProfilsController, 'updateView']).use(middleware.auth())
 router.on('/login').render('pages/login')
 router.on('/signin').render('pages/signin')
