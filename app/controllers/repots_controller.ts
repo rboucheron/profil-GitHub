@@ -1,7 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import GithubRepot from '#models/github_repot'
 import axios from 'axios'
-import { githubRepotValidators } from '#validators/github_repot'
+
 
 export default class RepotsController {
   async index({ response, auth, view }: HttpContext) {

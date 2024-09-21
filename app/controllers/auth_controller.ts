@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import { registrationValidator } from '#validators/auth'
+import hash from '@adonisjs/core/services/hash'
 
 export default class AuthController {
   async githubCallback({ ally, response, auth }: HttpContext) {
@@ -34,21 +35,32 @@ export default class AuthController {
       await auth.use('web').login(newUser)
     }
 
+    if (authUser) {
+      await auth.use('web').login(authUser)
+    }
+
     return response.redirect(`/repot`)
   }
 
   async login({ request, response, auth }: HttpContext) {
-    const { email, password } = request.all()
+    const { email, password } = request.only(['email', 'password'])
 
-    const user = await User.verifyCredentials(email, password)
+    const user = await User.query().where('email', email).first()
 
-    if (user) {
-      await auth.use('web').login(user)
-
-      return response.redirect(`/repot`)
+    if(!user){
+      return response.abort('Invalid credentials')
     }
 
-    return response.status(400).send({})
+    if (user.password !== null) {
+      const isPasswordValid = await hash.verify(user.password, password)
+
+      if (isPasswordValid){
+        await auth.use('web').login(user)
+        return response.redirect(`/repot`)
+
+      }
+    }
+    return response.status(400).send({'message': '404'})
   }
 
   async registration({ request, response, auth }: HttpContext) {
@@ -76,5 +88,4 @@ export default class AuthController {
       return response.status(500).send({ error: 'Une erreur est survenue' })
     }
   }
-
 }

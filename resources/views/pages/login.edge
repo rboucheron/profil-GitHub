@@ -1,20 +1,35 @@
 @include('base/header')
 
-<form>
-  <div class="w-1/2 m-auto  mt-24 ">
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" class="input-custom" placeholder="Jhone Doe "  />
+<form action="" method="post">
 
-  </div>
-    <div class="w-1/2 m-auto  mt-10 ">
-      <label for="password">Password</label>
-      <input id="password" name="password" type="password" class="input-custom" placeholder="***"  />
+  {{csrfField()}}
 
-    </div>
+   <div class="w-1/2 m-auto mt-10">
+      @component('components/input', {
+        type: 'email',
+        name: 'email',
+        id: 'email',
+        label: 'Email',
+        required: true
+      })
+      @endcomponent
+   </div>
+   <div class="w-1/2 m-auto mt-10">
+      @component('components/input', {
+        type: 'password',
+        name: 'password',
+        id: 'password',
+        label: 'Password',
+        placeholder: '***',
+        required: true
+      })
+      @endcomponent
+   </div>
+
+
     <div class="w-1/2 m-auto mt-10 flex justify-between ">
-      <button class="bg-blue-300 p-4 rounded-full ">Se Connecter </button>
+      <button class="bg-blue-300 p-4 rounded-full " type="submit">Se Connecter </button>
       <a href="" class="p-2 rounded-xl "> Avec Github</a>
-
     </div>
 
 </div>
