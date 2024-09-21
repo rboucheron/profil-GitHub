@@ -89,7 +89,10 @@
         @endif
         <div class="flex justify-end space-x-4 mt-6 absolute bottom-2 right-2">
           <a class="text-blue-400 text-sm font-light" href="/repot/update/{{project.id}}">Modifier</a>
-          <div class="text-red-400 text-sm font-light">Supprimer</div>
+
+          <form type="post" action="/repot/delete/{{project.id}}?method=DELETE">
+            <button class="text-red-400 text-sm font-light" type="submit">Supprimer</button>
+          </form>
         </div>
 
       </div>

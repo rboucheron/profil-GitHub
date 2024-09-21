@@ -87,8 +87,8 @@ export default class RepotsController {
   }
 
   async updateForm({ params, response, auth, view }: HttpContext) {
-    const repotId = params.id
-    const repot = await GithubRepot.query().where('id', repotId).first()
+    const {id} = params
+    const repot = await GithubRepot.query().where('id', id).first()
     const user = auth.user
     if (!repot) {
       return response.status(400).send({})
@@ -96,6 +96,15 @@ export default class RepotsController {
     }
 
     return view.render('pages/update', {repot, user})
+  }
+
+  async deleteRepot({ params, response}: HttpContext) {
+    const {id} = params
+    const repot = await GithubRepot.query().where('id', id).delete()
+    if (!repot) {
+      return response.status(500).send({})
+    }
+    return response.redirect(`/repot`)
   }
 
 
