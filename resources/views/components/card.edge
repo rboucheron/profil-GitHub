@@ -1,7 +1,11 @@
-@each(project in projects)
-<div class="border p-4 border-gray-400 rounded-sm">
-  <h2 class="text-xl font-semibold">{{ project.name }}</h2>
-  <p class="text-md font-normal">{{ project.description }}</p>
-  <a href="" class="text-blue-400 text-sm font-light">Visit Project</a>
+<div class="border p-4 border-gray-400 rounded-sm relative p-y-7">
+    <h2 class="text-xl font-semibold">{{ name }}</h2>
+    <p class="text-md font-normal mb-6"> {{ description || 'Aucune Description' }} </p>
+    <div class="flex justify-end space-x-4 mt-6 absolute bottom-2 right-2">
+        <a class="text-blue-400 text-sm font-light" href="/repot/update/{{id}}">Modifier</a>
+        <form type="post" action="{{route('repot.delete', {id: id)}}?_method=DELETE">
+            <button class="text-red-400 text-sm font-light" type="submit">Supprimer</button>
+        </form>
+    </div>
 </div>
-@endeach
+
