@@ -107,5 +107,9 @@ export default class RepotsController {
     return response.redirect(`/repot`)
   }
 
+  async updateRepot({ response, request }: HttpContext) {
+    return response.status(200).send({request})
+  }
+
 
 }

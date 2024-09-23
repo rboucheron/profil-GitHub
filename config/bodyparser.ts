@@ -12,8 +12,11 @@ const bodyParserConfig = defineConfig({
    * content-type parser
    */
   form: {
-    convertEmptyStringsToNull: true,
+    encoding: 'utf-8',
+    limit: '1mb',
+    queryString: {},
     types: ['application/x-www-form-urlencoded'],
+    convertEmptyStringsToNull: true,
   },
 
   /**
@@ -34,21 +37,13 @@ const bodyParserConfig = defineConfig({
    * File uploads are handled by the multipart parser.
    */
   multipart: {
-    /**
-     * Enabling auto process allows bodyparser middleware to
-     * move all uploaded files inside the tmp folder of your
-     * operating system
-     */
     autoProcess: true,
-    convertEmptyStringsToNull: true,
     processManually: [],
-
-    /**
-     * Maximum limit of data to parse including all files
-     * and fields
-     */
+    encoding: 'utf-8',
+    fieldsLimit: '2mb',
     limit: '20mb',
     types: ['multipart/form-data'],
+    convertEmptyStringsToNull: true,
   },
 })
 

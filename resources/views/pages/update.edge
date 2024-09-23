@@ -2,82 +2,119 @@
 
 @include('base/header')
 
-
-
-  <form action="" method="POST" >
-    {{csrfField()}}
 @if(repot)
+<form  method="POST" action="/repot/update/{{repot.id}}?_method=PUT" enctype="multipart/form-data">
+    {{csrfField()}}
 
-  <div class="grid grid-cols-2 w-3/4 m-auto mt-10 gap-6">
-     <div class="w-auto ">
-        @component('components/input', {
-          type: 'text',
-          name: 'name',
-          id: 'name',
-          label: 'Nom du Projet',
-          required: true,
-          value: repot.name
-        })
-        @endcomponent
 
-     </div>
-        <div class="w-auto ">
-           @component('components/input', {
-             type: 'text',
-             name: 'homepage',
-             id: 'homepage',
-             label: 'Liens vers le projet ',
-             required: true,
-             value: repot.homepage
-           })
-           @endcomponent
+    <div class="grid grid-cols-2 w-3/4 m-auto mt-10 gap-6">
+        <div class="w-auto">
+            @component('components/input', {
+                type: 'text',
+                name: 'name',
+                id: 'name',
+                label: 'Nom du Projet',
+                required: true,
+                value: repot.name
+            })
+            @endcomponent
         </div>
 
-              <div class=" col-span-2">
-                 @component('components/textarea', {
-
-                   name: 'description',
-                   id: 'description',
-                   label: 'Décrit ton projet',
-                   required: true,
-                   value: repot.description
-                 })
-                 @endcomponent
-              </div>
-                <div class="w-auto ">
-                   @component('components/input', {
-                     type: 'text',
-                     name: 'language',
-                     id: 'langage',
-                     label: 'Langage utilisé  ',
-                     required: true,
-                      value: repot.language
-                   })
-                   @endcomponent
-                </div>
-            <div class="w-auto ">
-                           @component('components/input', {
-                             type: 'text',
-                             name: 'htmlUrl',
-                             id: 'html_url',
-                             label: 'Liens Github  ',
-                             required: true,
-                              value: repot.html_url
-
-                           })
-                           @endcomponent
-                        </div>
         <div class="w-auto">
-         <button type="submit" class="w-1/2   bg-blue-400 rounded-full p-2 text-white  m-auto">Ajouter </button>
+            @component('components/input', {
+                type: 'text',
+                name: 'homepage',
+                id: 'homepage',
+                label: 'Liens vers le projet',
+                required: true,
+                value: repot.homepage
+            })
+            @endcomponent
+        </div>
 
-</div>
+        <div class="col-span-2">
+            @component('components/textarea', {
+                name: 'description',
+                id: 'description',
+                label: 'Décrit ton projet',
+                required: true,
+                value: repot.description
+            })
+            @endcomponent
+        </div>
+
+        <div class="w-auto">
+            @component('components/input', {
+                type: 'text',
+                name: 'language',
+                id: 'langage',
+                label: 'Langage utilisé',
+                required: true,
+                value: repot.language
+            })
+            @endcomponent
+        </div>
+
+        <div class="w-auto">
+            @component('components/input', {
+                type: 'text',
+                name: 'htmlUrl',
+                id: 'html_url',
+                label: 'Liens Github',
+                required: true,
+                value: repot.html_url
+            })
+            @endcomponent
+        </div>
+
+        <div class="col-span-2">
+            <label for="image-upload"
+                   class="block border-dashed border-4 border-gray-400 rounded-lg p-4 text-center text-gray-500 cursor-pointer hover:bg-gray-100 transition-all">
+                Cliquez ici ou glissez vos images
+            </label>
+            <input type="file" id="image-upload" name="images[]" accept="image/*" multiple class="hidden">
+            <div id="preview-container" class="grid grid-cols-3 gap-4 mt-4"></div>
+        </div>
+        <div class="w-auto col-span-2 flex justify-center">
+            <button type="submit" class="w-1/2 bg-blue-400 rounded-full p-2 text-white m-auto">Ajouter</button>
+        </div>
+    </div>
+    @endif
+
+</form>
+
+@include('base/footer')
+
+<script>
+
+    const inputFile = document.getElementById('image-upload')
+    const previewContainer = document.getElementById('preview-container')
+
+    inputFile.addEventListener('change', function(event) {
+        previewContainer.innerHTML = ''
+        const files = event.target.files
+
+        if (files.length) {
+            Array.from(files).forEach(file => {
+                const reader = new FileReader()
+
+                reader.onload = function(e) {
+                    const imgElement = document.createElement('img')
+                    imgElement.src = e.target.result
+                    imgElement.alt = file.name
+                    imgElement.className = 'h-32 w-32 object-cover rounded-lg shadow-lg transform transition duration-500 hover:scale-110'
+
+                    previewContainer.appendChild(imgElement)
+                }
+
+                reader.readAsDataURL(file)
+            })
+        }
+    })
 
 
+    document.querySelector('label[for="image-upload"]').addEventListener('click', () => {
+        inputFile.click()
+    })
+</script>
 
-
-  </div>
-
-  </form>
-  @endif
-
-  @include('base/footer')
